@@ -44,7 +44,42 @@ footer{text-align:center;color:#8f8da4;font-size:11px;padding:14px}
 <section class="card"><h2>Roteiro sugerido</h2><div id="script" class="out">Seu roteiro em cenas aparecerá aqui.</div><button id="copyScript" class="alt">Copiar roteiro</button></section>
 <section class="card"><h2>Prompt para o gerador de vídeo</h2><div id="prompt" class="out">Preencha os campos e toque em “Montar roteiro e prompt UGC”.</div><button id="copyPrompt" class="alt">Copiar prompt</button><p class="hint">Este módulo cria roteiro e instruções. Ainda não gera o arquivo de vídeo: o próximo passo será conectar um motor de geração, verificando antes se existe uma opção gratuita disponível.</p></section>
 <section class="card"><h2>Checklist antes de gerar</h2><p class="hint">Confira se o prompt descreve corretamente a imagem, a ação, as mãos/rosto, a fala e o enquadramento. Se a ferramenta de vídeo permitir, use a imagem enviada como primeiro quadro ou referência principal.</p></section>
-<footer>Isabella AI Studio · UGC Studio · Protótipo local 02</footer>
+<section class="card">
+<span class="tag">MÓDULO 02 · IMAGENS</span>
+<h2>Gerador de Prompts para Imagens</h2>
+
+<div class="upload">
+<b>Imagem de referência</b>
+<div class="hint">Envie uma foto para orientar a criação do prompt.</div>
+<input id="imageReference" type="file" accept="image/*">
+<img id="imagePreview" class="preview" alt="Prévia da referência">
+</div>
+
+<label for="imageStyle">Estilo da imagem</label>
+<select id="imageStyle">
+<option value="Mirror Selfie">Mirror Selfie — look diante do espelho</option>
+<option value="POV">POV — somente mãos mostrando produto</option>
+<option value="Influencer">Influencer — modelo apresentando produto</option>
+<option value="Demonstration">Demonstração prática</option>
+<option value="Unboxing">Unboxing de produto</option>
+</select>
+
+<label for="imageProduct">Produto ou tema</label>
+<input id="imageProduct" placeholder="Ex.: perfume, roupa, maquiagem...">
+
+<label for="imageScenario">Cenário desejado</label>
+<input id="imageScenario" placeholder="Ex.: quarto moderno, loja elegante...">
+
+<label for="imageDetails">Detalhes adicionais</label>
+<textarea id="imageDetails" placeholder="Descreva como deseja a imagem..."></textarea>
+
+<button id="generateImagePrompt">Gerar Prompt para Imagem</button>
+
+<h2 style="margin-top:18px">Prompt gerado</h2>
+<div id="imagePrompt" class="out">Seu prompt para imagem aparecerá aqui.</div>
+<button id="copyImagePrompt" class="alt">Copiar prompt de imagem</button>
+</section>
+  <footer>Isabella AI Studio · UGC Studio · Protótipo local 02</footer>
 </main>
 <script>
 const $=id=>document.getElementById(id);
@@ -62,4 +97,96 @@ const script=`CENA 1 · ABERTURA (0–2s)\nComeçar com o produto claramente vis
 const prompt=`Crie um vídeo UGC hiper-realista de ${length}, no formato ${ratio}, usando a imagem enviada como referência visual principal e exata.\n\nESTILO: ${style}.\n${styleRules}\nCATEGORIA: ${product}.\nCÂMERA: ${camera}.\nAMBIENTE: ${place}.\n\nAÇÃO: ${action}.\n\nROTEIRO:\n${script}\n\nREGRAS OBRIGATÓRIAS:\n${rules.map(x=>'• '+x).join('\n')||'• Respeitar a referência visual e manter movimentos naturais.'}\n${extra?'RESTRIÇÕES ADICIONAIS: '+extra:''}\n\nCONTINUIDADE: manter a mesma identidade visual do produto e a continuidade dos movimentos entre os quadros. Evitar deformações, cintilação, mudanças repentinas de cenário, objetos duplicados, dedos extras e cortes que alterem o produto.\n\nRESULTADO: vídeo com aparência de gravação real feita por criador de conteúdo, iluminação natural, detalhes nítidos e produto como protagonista. ${$('captions').checked?'Sem texto sobreposto.':'Não inserir elementos gráficos desnecessários.'}`;
 $('script').textContent=script;$('prompt').textContent=prompt;
 };
+
+// ===================================
+// ISABELLA AI STUDIO - GERADOR DE IMAGENS
+// ===================================
+
+const imageReference = document.getElementById('imageReference');
+const imagePreview = document.getElementById('imagePreview');
+
+imageReference.addEventListener('change', function() {
+  const file = this.files[0];
+
+  if (!file) return;
+
+  imagePreview.src = URL.createObjectURL(file);
+  imagePreview.style.display = 'block';
+});
+
+document.getElementById('generateImagePrompt').addEventListener('click', function() {
+
+  const style = document.getElementById('imageStyle').value;
+  const product = document.getElementById('imageProduct').value.trim();
+  const scenario = document.getElementById('imageScenario').value.trim();
+  const details = document.getElementById('imageDetails').value.trim();
+
+  if (!product) {
+    alert('Digite o produto ou tema da imagem.');
+    return;
+  }
+
+  let instructions = '';
+
+  if (style === 'Mirror Selfie') {
+    instructions = 'Mulher adulta fazendo mirror selfie, mostrando o look diante do espelho, segurando o celular e escondendo completamente o rosto.';
+  }
+
+  if (style === 'POV') {
+    instructions = 'Imagem em primeira pessoa POV, mostrando somente mãos humanas naturais apresentando o produto, sem rosto ou corpo visível.';
+  }
+
+  if (style === 'Influencer') {
+    instructions = 'Mulher adulta com aparência natural de influenciadora UGC apresentando o produto diretamente para a câmera.';
+  }
+
+  if (style === 'Demonstration') {
+    instructions = 'Demonstração realista do produto sendo utilizado na prática, mostrando detalhes, funcionamento e benefícios visuais.';
+  }
+
+  if (style === 'Unboxing') {
+    instructions = 'Cena realista de unboxing, mostrando a abertura da embalagem e a apresentação cuidadosa do produto.';
+  }
+
+  const prompt = `Crie uma fotografia UGC hiper-realista e profissional.
+
+ESTILO: ${style}
+
+CENA: ${instructions}
+
+PRODUTO: ${product}
+
+CENÁRIO: ${scenario || 'Ambiente moderno, organizado e bem iluminado.'}
+
+DETALHES ADICIONAIS: ${details || 'Valorizar o produto e manter aparência natural.'}
+
+QUALIDADE: Fotografia extremamente realista, iluminação natural, texturas detalhadas, cores equilibradas, anatomia correta e aparência de fotografia profissional feita com smartphone.
+
+FIDELIDADE: Preservar as características do produto e da imagem de referência enviada. Não inventar logotipos, textos ou acessórios.
+
+FORMATO: Vertical 9:16, composição adequada para TikTok e conteúdo UGC.
+
+RESULTADO: Uma imagem comercial realista, atraente e natural, sem aparência artificial.`;
+
+  document.getElementById('imagePrompt').textContent = prompt;
+});
+
+document.getElementById('copyImagePrompt').addEventListener('click', async function() {
+
+  const prompt = document.getElementById('imagePrompt').textContent;
+
+  if (!prompt || prompt.startsWith('Seu prompt')) {
+    alert('Gere um prompt primeiro.');
+    return;
+  }
+
+  try {
+    await navigator.clipboard.writeText(prompt);
+    this.textContent = 'Prompt copiado!';
+  } catch (error) {
+    alert('Não foi possível copiar automaticamente. Selecione e copie o texto.');
+  }
+
+});
+
 </script></body></html>
