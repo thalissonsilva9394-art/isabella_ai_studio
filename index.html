@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#10101b">
+<title>Isabella AI Studio — UGC Studio</title>
+<style>
+:root{color-scheme:dark;--bg:#0d0d17;--panel:#191927;--line:#34344b;--muted:#b0b0c4;--pink:#f0abfc;--purple:#a78bfa}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#25203a 0,#0d0d17 56%);font:15px system-ui,-apple-system,Segoe UI,sans-serif;color:#faf8ff}
+main{max-width:780px;margin:auto;padding:20px 14px 44px}.head{display:flex;gap:12px;align-items:center;margin-bottom:18px}.logo{width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,#f0abfc,#8b5cf6);display:grid;place-items:center;color:#21102c;font-size:24px;font-weight:900}h1{font-size:21px;margin:0}.muted,.hint{color:var(--muted);font-size:12px;line-height:1.5}.card{background:#191927ed;border:1px solid var(--line);border-radius:18px;padding:16px;margin:13px 0;box-shadow:0 12px 32px #0003}h2{font-size:17px;margin:0 0 12px}.tag{display:inline-block;border:1px solid #76558b;background:#352442;color:#f5d0fe;border-radius:30px;padding:4px 9px;font-size:11px;margin-bottom:9px}
+label{display:block;font-weight:650;margin:12px 0 6px}input,select,textarea{width:100%;border:1px solid #44445e;background:#10101c;color:white;border-radius:11px;padding:12px;font:inherit}textarea{min-height:80px;resize:vertical}.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.upload{border:1px dashed #77708e;border-radius:13px;padding:15px;text-align:center;background:#10101c}.upload input{border:0;padding:7px}.preview{display:none;max-height:230px;max-width:100%;object-fit:contain;margin:10px auto 0;border-radius:10px}
+button{width:100%;border:0;border-radius:12px;padding:13px 15px;margin-top:13px;background:linear-gradient(110deg,#f0abfc,#a78bfa);color:#24112c;font-weight:800;font-size:15px}.alt{background:#34334a;color:#fff}.out{white-space:pre-wrap;background:#10101c;border:1px solid #41415a;border-radius:12px;padding:13px;line-height:1.55;font-size:13px;min-height:80px;overflow-wrap:anywhere}.shot{padding:11px;border:1px solid #3a3951;border-radius:12px;margin:8px 0;background:#11111e}.shot strong{color:#f0abfc}.small{font-size:11px;color:#aaa8bd}.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}.check{display:flex;align-items:flex-start;gap:8px;background:#11111e;padding:9px;border:1px solid #39394f;border-radius:10px;font-size:12px}.check input{width:auto;margin:2px 0 0;accent-color:#d8a4f5}
+footer{text-align:center;color:#8f8da4;font-size:11px;padding:14px}
+@media(max-width:520px){.grid,.checks{grid-template-columns:1fr}main{padding:15px 11px 35px}}
+</style></head>
+<body><main>
+<header class="head"><div class="logo">✦</div><div><h1>Isabella AI Studio</h1><div class="muted">UGC Studio · laboratório de vídeos de produtos</div></div></header>
+<section class="card">
+<span class="tag">MÓDULO 01 · UGC</span><h2>Crie seu vídeo de apresentação</h2>
+<div class="upload"><b>Foto de referência do produto</b><div class="hint">Envie uma imagem nítida. Ela será usada como referência visual para montar o prompt.</div><input id="photo" type="file" accept="image/*"><img id="preview" class="preview" alt="Prévia do produto"></div>
+<div class="grid">
+<div><label for="style">Estilo UGC</label><select id="style"><option value="UGC Mirror Selfie — modelo adulta em frente ao espelho, segurando o celular, enquadramento do pescoço para baixo">Mirror Selfie — celular cobre o rosto</option><option value="UGC POV — câmera em primeira pessoa, somente as mãos da modelo aparecem mostrando o produto">POV — somente mãos mostrando produto</option><option value="UGC Influenciadora — modelo adulta apresentando o produto diretamente para a câmera, com rosto visível">Influenciadora — falando com a câmera</option><option value="demonstração prática do produto sendo usado">Demonstração em uso</option><option value="vídeo de unboxing natural">Unboxing</option></select></div>
+<div><label for="product">Categoria do produto</label><select id="product"><option>Moda e roupas</option><option>Beleza e cuidados pessoais</option><option>Casa e decoração</option><option>Ferramentas e utilidades</option><option>Acessórios</option><option>Eletrônicos</option><option>Outro produto</option></select></div>
+<div><label for="length">Duração</label><select id="length"><option>8 segundos</option><option selected>10 segundos</option><option>15 segundos</option><option>20 segundos</option></select></div>
+<div><label for="ratio">Formato</label><select id="ratio"><option>Vertical 9:16</option><option>Quadrado 1:1</option><option>Horizontal 16:9</option></select></div>
+<div><label for="voice">Áudio</label><select id="voice"><option>Fala natural em português brasileiro</option><option>Sem fala, apenas sons ambientes</option><option>Narração em português brasileiro</option><option>Fala + sons ambientes discretos</option></select></div>
+<div><label for="camera">Câmera</label><select id="camera"><option>Celular realista, movimentos suaves de mão</option><option>POV estável em primeira pessoa</option><option>Câmera fixa, estilo review</option><option>Close-ups cinematográficos do produto</option></select></div>
+</div>
+<label for="place">Ambiente / cenário</label><input id="place" placeholder="Ex.: quarto moderno e iluminado, luz natural">
+<label for="action">O que a pessoa deve fazer?</label><textarea id="action" placeholder="Ex.: segurar a peça, aproximar para mostrar o tecido e depois mostrar como veste."></textarea>
+<label for="speech">Fala desejada (opcional)</label><textarea id="speech" placeholder="Ex.: Gente, olha o acabamento desse produto! Eu adorei..."></textarea>
+<label for="extra">Restrições especiais (opcional)</label><textarea id="extra" placeholder="Ex.: não mostrar o rosto; manter o celular na mesma mão; não alterar a estampa."></textarea>
+<label>Regras de qualidade e fidelidade</label>
+<div class="checks">
+<label class="check"><input type="checkbox" id="same" checked> Preservar exatamente o produto da referência</label>
+<label class="check"><input type="checkbox" id="logo" checked> Manter logotipo, rótulos e textos reais</label>
+<label class="check"><input type="checkbox" id="hands" checked> Mãos e anatomia naturais</label>
+<label class="check"><input type="checkbox" id="noextra" checked> Não inventar acessórios ou detalhes</label>
+<label class="check"><input type="checkbox" id="real" checked> Aparência UGC realista, sem visual artificial</label>
+<label class="check"><input type="checkbox" id="captions"> Sem legendas ou textos adicionados na tela</label>
+</div>
+<button id="generate">Montar roteiro e prompt UGC</button>
+</section>
+<section class="card"><h2>Roteiro sugerido</h2><div id="script" class="out">Seu roteiro em cenas aparecerá aqui.</div><button id="copyScript" class="alt">Copiar roteiro</button></section>
+<section class="card"><h2>Prompt para o gerador de vídeo</h2><div id="prompt" class="out">Preencha os campos e toque em “Montar roteiro e prompt UGC”.</div><button id="copyPrompt" class="alt">Copiar prompt</button><p class="hint">Este módulo cria roteiro e instruções. Ainda não gera o arquivo de vídeo: o próximo passo será conectar um motor de geração, verificando antes se existe uma opção gratuita disponível.</p></section>
+<section class="card"><h2>Checklist antes de gerar</h2><p class="hint">Confira se o prompt descreve corretamente a imagem, a ação, as mãos/rosto, a fala e o enquadramento. Se a ferramenta de vídeo permitir, use a imagem enviada como primeiro quadro ou referência principal.</p></section>
+<footer>Isabella AI Studio · UGC Studio · Protótipo local 02</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+$('photo').addEventListener('change',()=>{const f=$('photo').files?.[0];if(!f)return;$('preview').src=URL.createObjectURL(f);$('preview').style.display='block';});
+function copy(id,btn){const t=$(id).textContent;if(!t||t.startsWith('Seu ')||t.startsWith('Preencha'))return; if(navigator.clipboard?.writeText){navigator.clipboard.writeText(t).then(()=>{btn.textContent='Copiado!';setTimeout(()=>btn.textContent=btn.dataset.label,1500)}).catch(()=>alert('Selecione o texto e copie manualmente.'));}else alert('Selecione o texto e copie manualmente.');}
+$('copyScript').dataset.label='Copiar roteiro';$('copyPrompt').dataset.label='Copiar prompt';
+$('copyScript').onclick=()=>copy('script',$('copyScript'));$('copyPrompt').onclick=()=>copy('prompt',$('copyPrompt'));
+$('generate').onclick=()=>{
+const style=$('style').value,product=$('product').value,length=$('length').value,ratio=$('ratio').value,voice=$('voice').value,camera=$('camera').value,place=$('place').value.trim()||'ambiente doméstico moderno, organizado e bem iluminado',action=$('action').value.trim()||'apresentar o produto de forma clara, natural e convincente',speech=$('speech').value.trim(),extra=$('extra').value.trim();
+const rules=[];if($('same').checked)rules.push('Preservar fielmente o produto da imagem de referência: formato, cor, proporções, material, textura, acabamento e detalhes.');if($('logo').checked)rules.push('Manter logotipos, rótulos e textos originais legíveis, sem redesenhar ou inventar marcas.');if($('hands').checked)rules.push('Manter anatomia humana correta, mãos naturais, cinco dedos quando visíveis e contato físico coerente.');if($('noextra').checked)rules.push('Não adicionar acessórios, peças, estampas ou componentes que não existam na referência.');if($('real').checked)rules.push('Estética UGC autêntica, espontânea e hiper-realista, sem aparência de animação ou publicidade artificial.');if($('captions').checked)rules.push('Não adicionar legendas, títulos, gráficos ou textos sobrepostos.');
+const mirror=style.startsWith('UGC Mirror Selfie'),pov=style.startsWith('UGC POV'),influencer=style.startsWith('UGC Influenciadora');
+const styleRules=mirror?'ENQUADRAMENTO MIRROR SELFIE: mostrar uma modelo adulta diante de um espelho, segurando o smartphone continuamente na mesma mão. O celular deve esconder completamente o rosto; nunca mostrar olhos, nariz, boca ou reflexo facial. Enquadrar do pescoço para baixo, com foco no produto/roupa. Manter corpo, mãos, celular e reflexo coerentes em todos os quadros.':pov?'ENQUADRAMENTO POV: câmera em primeira pessoa. Mostrar somente as mãos e, quando necessário, os antebraços da modelo. Não mostrar rosto, cabeça, corpo, reflexos ou personagem. As mãos demonstram o produto de forma natural e contínua.':'ENQUADRAMENTO INFLUENCIADORA: modelo adulta pode aparecer de frente para a câmera, apresentar o produto com expressão natural e demonstrá-lo claramente, sem esconder os detalhes importantes.';
+const spoken=speech?`FALA EXATA: “${speech}”. Não alterar as palavras nem inventar promessas.`:(voice.includes('Sem fala')?'Não há diálogo.':(mirror||pov?'Se houver fala, usar voz natural em português brasileiro, sem mostrar o rosto.':'Criar uma fala curta, espontânea e natural em português brasileiro, sem afirmações não comprovadas sobre o produto.'));
+const script=`CENA 1 · ABERTURA (0–2s)\nComeçar com o produto claramente visível e uma composição que desperte curiosidade. ${camera}.\n\nCENA 2 · APRESENTAÇÃO (2–6s)\n${action}. Mostrar detalhes importantes em enquadramentos limpos, sem esconder o produto.\n\nCENA 3 · DEMONSTRAÇÃO / FECHAMENTO (6s até o final)\nFinalizar com o produto em destaque e uma reação ou conclusão natural, sem exageros.\n\nAMBIENTE: ${place}.\nÁUDIO: ${voice}.\n${spoken}`;
+const prompt=`Crie um vídeo UGC hiper-realista de ${length}, no formato ${ratio}, usando a imagem enviada como referência visual principal e exata.\n\nESTILO: ${style}.\n${styleRules}\nCATEGORIA: ${product}.\nCÂMERA: ${camera}.\nAMBIENTE: ${place}.\n\nAÇÃO: ${action}.\n\nROTEIRO:\n${script}\n\nREGRAS OBRIGATÓRIAS:\n${rules.map(x=>'• '+x).join('\n')||'• Respeitar a referência visual e manter movimentos naturais.'}\n${extra?'RESTRIÇÕES ADICIONAIS: '+extra:''}\n\nCONTINUIDADE: manter a mesma identidade visual do produto e a continuidade dos movimentos entre os quadros. Evitar deformações, cintilação, mudanças repentinas de cenário, objetos duplicados, dedos extras e cortes que alterem o produto.\n\nRESULTADO: vídeo com aparência de gravação real feita por criador de conteúdo, iluminação natural, detalhes nítidos e produto como protagonista. ${$('captions').checked?'Sem texto sobreposto.':'Não inserir elementos gráficos desnecessários.'}`;
+$('script').textContent=script;$('prompt').textContent=prompt;
+};
+</script></body></html>
